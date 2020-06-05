@@ -1,0 +1,7 @@
+locus_anno_seq?
+GO slim terms table
+SSR table
+Uniref100 matches table
+iprscan table
+pfam table
+fpkm table
