@@ -1,0 +1,1 @@
+iprscan  -goterms --cpu 12 -d ipr_res -f GFF3 -i DM.pep.fa -appl SUPERFAMILY,CDD,Pfam
