@@ -1,4 +1,5 @@
-# load Genome assembly for the doubled monoploid potato DM 1-3 516 R44 - v6.1 into table model_anno, is_repr and func_anno are set to null
+# parses functional annotation
+# querys the model_anno table and inserts function based on transcript id
 from sqlalchemy import String,Integer,Column, create_engine, and_, ForeignKey, ForeignKeyConstraint
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
