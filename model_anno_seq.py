@@ -1,3 +1,7 @@
+#populates empty table with transcript ids from model_anno
+#parses cds,cdna,amino acid sequences and inserts them into the database based on transcript id
+#
+#
 from sqlalchemy import String,Integer,Column, create_engine, and_, ForeignKey, ForeignKeyConstraint
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
