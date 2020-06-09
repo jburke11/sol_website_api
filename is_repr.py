@@ -1,9 +1,9 @@
 # loads in representative transcripts
 # parses those transcripts to find the match in the model_anno table and sets is_repr to Y
 # parses the model_anno table again and sets all transcripts that are not representative to N
-from sqlalchemy import String,Integer,Column, create_engine, and_, ForeignKey, ForeignKeyConstraint
+from sqlalchemy import String,Integer,Column, create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy.orm import sessionmaker
 base = declarative_base()
 engine = create_engine ( 'sqlite:////Users/burkej24/Desktop/potato_website/DM_6.1.db')
 base.metadata.create_all ( engine )

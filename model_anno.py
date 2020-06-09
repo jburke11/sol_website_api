@@ -1,7 +1,7 @@
 # load Genome assembly for the doubled monoploid potato DM 1-3 516 R44 - v6.1 into table model_anno, is_repr and func_anno are set to null
-from sqlalchemy import String,Integer,Column, create_engine, and_, ForeignKey, ForeignKeyConstraint
+from sqlalchemy import String,Integer,Column, create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy.orm import sessionmaker
 base = declarative_base()
 engine = create_engine ( 'sqlite:////Users/burkej24/Desktop/potato_website/DM_6.1.db', echo = True)
 base.metadata.create_all ( engine )

@@ -1,7 +1,7 @@
 # parse through iprscan tsv results and populate table model_iprscan
-from sqlalchemy import String , Integer , Column , create_engine , and_ , ForeignKey , ForeignKeyConstraint
+from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker , relationship
+from sqlalchemy.orm import sessionmaker
 from database_models import Model_iprscan
 
 base = declarative_base ( )

@@ -2,11 +2,11 @@
 #parses cds,cdna,amino acid sequences and inserts them into the database based on transcript id
 #
 #
-from sqlalchemy import String,Integer,Column, create_engine, and_, ForeignKey, ForeignKeyConstraint
+from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy.orm import sessionmaker
 from database_models import Model_anno_seq, Model_anno
-from Bio import SeqIO, SeqRecord, Seq
+from Bio import SeqIO
 base = declarative_base()
 engine = create_engine ( 'sqlite:////Users/burkej24/Desktop/potato_website/DM_6.1.db')
 base.metadata.create_all ( engine )
