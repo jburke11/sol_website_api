@@ -31,9 +31,10 @@ class Model_go_slim(base):
     transcript_id = Column("transcript_id", String)
     go_accession = Column("go_accession", String)
     go_type = Column("go_type", String)
-    go_name = Column("go_name", String, primary_key=True)
+    go_name = Column("go_name", String)
     go_ev_code = Column("go_ev_code", String)
     go_dbxref = Column("go_dbxref", String)
+    count = Column("count", Integer, primary_key=True)
 
 class Putative_ssr(base):
     __tablename__ = "putative_ssr"
@@ -43,7 +44,7 @@ class Putative_ssr(base):
     end3 = Column("end3", Integer)
     unit_size = Column("unit_size", Integer)
     motif = Column("motif", String)
-    length = Column("ssr_length", Integer)
+    ssr_length = Column("ssr_length", Integer)
 
 class Model_uniref(base):
     __tablename__ = 'model_uniref'
@@ -60,8 +61,8 @@ class Model_iprscan(base):
     method = Column("method", String)
     method_accession = Column("method_accession", String)
     method_description = Column("method_description", String)
-    match_start = Column("match_start", Integer, primary_key=True)
-    match_end = Column("match_end", Integer)
+    match_start = Column("match_start", Integer)
+    match_end = Column("match_end", Integer, primary_key=True)
     evalue = Column("evalue", Float)
     interpro_accession = Column("interpro_accession", String)
     interpro_description = Column("interpro_description", String)
