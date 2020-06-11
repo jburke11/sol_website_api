@@ -2,7 +2,7 @@ from sqlalchemy import String, Integer, Column, create_engine, and_, ForeignKey,
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 base = declarative_base()
-engine = create_engine ( 'sqlite:////Users/burkej24/Desktop/trifida_anno_v3.db', echo=True)
+engine = create_engine ( 'sqlite:////Users/burkej24/Desktop/potato_website/DM_6.1.db', echo=True)
 class Model_anno(base):
     __tablename__ = 'model_anno'
 
@@ -21,10 +21,10 @@ class Model_anno_seq(base):
     cds = Column('cds', String)
     protein = Column('protein', String)
 
-class Locus_anno_seq(base):
-    __tablename__ = "locus_anno_seq"
-    locus_id = Column ( 'locus_id' , String, primary_key=True )
-    locus = Column ( 'locus' , String )
+#class Locus_anno_seq(base):
+#    __tablename__ = "locus_anno_seq"
+#    locus_id = Column ( 'locus_id' , String, primary_key=True )
+#    locus = Column ( 'locus' , String )
 
 class Model_go_slim(base):
     __tablename__ = 'model_go_slim'
@@ -46,14 +46,14 @@ class Putative_ssr(base):
     motif = Column("motif", String)
     ssr_length = Column("ssr_length", Integer)
 
-class Model_uniref(base):
-    __tablename__ = 'model_uniref'
-    transcript_id = Column("transcript_id", String)
-    accession = Column("accession", String, primary_key=True)
-    per_sim = Column("per_sim", Float)
-    per_cov = Column("per_cov", Float)
-    pvalue = Column("pvalue", Float)
-    description = Column("description", String)
+#class Model_uniref(base):
+#    __tablename__ = 'model_uniref'
+#    transcript_id = Column("transcript_id", String)
+#    accession = Column("accession", String, primary_key=True)
+#    per_sim = Column("per_sim", Float)
+#    per_cov = Column("per_cov", Float)
+#    pvalue = Column("pvalue", Float)
+#    description = Column("description", String)
 
 class Model_iprscan(base):
     __tablename__= "model_iprscan"
@@ -82,8 +82,8 @@ class Model_pfam(base):
     evalue = Column("evalue", Float)
     hmm_name = Column("hmm_name", String)
 
-class Model_FPKM(base):
-    __tablename__ = "model_fpkm"
-    transcript_id = Column("transcript_id", String)
-    lib = Column("library", String)
-    fpkm = Column("fpkm", Float, primary_key=True)
+#class Model_FPKM(base):
+#    __tablename__ = "model_fpkm"
+#    transcript_id = Column("transcript_id", String)
+#    lib = Column("library", String)
+#    fpkm = Column("fpkm", Float, primary_key=True)
