@@ -153,20 +153,20 @@ def get_go(keyword: str, type: str):
                 temp_dict["species"] = "all"
                 temp_dict["sequence_id"] = item.transcript_id
                 temp_dict["go_id"] = item.go_accession
-                temp_dict["func_anno"] = item.go_ev_code
+                temp_dict["func_anno"] = item.go_name
                 lst.append(temp_dict)
         else:
             keyword = keyword.rstrip ( ).split ( "_" )
             keyword = " ".join ( keyword )
             keyword = "%" + keyword + "%"
-            query = session.query(Model_go_slim).filter(Model_iprscan.go_type.like(keyword))
+            query = session.query(Model_go_slim).filter(Model_go_slim.go_name.like(keyword))
             lst = []
             for item in query:
                 temp_dict = { }
                 temp_dict [ "species" ] = "all"
                 temp_dict [ "sequence_id" ] = item.transcript_id
                 temp_dict [ "go_id" ] = item.go_accession
-                temp_dict [ "func_anno" ] = item.go_type
+                temp_dict [ "func_anno" ] = item.go_name
                 lst.append ( temp_dict )
         data["go"] = lst
         if len(data["go"]) == 0:
