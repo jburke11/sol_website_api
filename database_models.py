@@ -7,7 +7,7 @@ class Model_anno(base):
     __tablename__ = 'model_anno'
 
     transcript_id = Column('transcript_id', String)
-    gene_id = Column('gene_id', String, primary_key=True)
+    gene_id = Column('gene_id', String)
     scaffold = Column('scaffold', String)
     origin = Column('ori', String)
     start = Column('start',Integer,primary_key= True)
@@ -62,11 +62,12 @@ class Model_iprscan(base):
     method_accession = Column("method_accession", String)
     method_description = Column("method_description", String)
     match_start = Column("match_start", Integer)
-    match_end = Column("match_end", Integer, primary_key=True)
+    match_end = Column("match_end", Integer)
     evalue = Column("evalue", Float)
     interpro_accession = Column("interpro_accession", String)
     interpro_description = Column("interpro_description", String)
     interpro_go = Column("interpro_go", String)
+    count = Column("count", Integer, primary_key=True)
 
 class Model_pfam(base):
     __tablename__ = "model_pfam"
