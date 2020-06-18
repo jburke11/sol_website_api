@@ -87,3 +87,9 @@ class Model_pfam(base):
 #    transcript_id = Column("transcript_id", String)
 #    lib = Column("library", String)
 #    fpkm = Column("fpkm", Float, primary_key=True)
+
+class chr_seq(base):
+    __tablename__ = "chr_seq"
+    chr = Column("chr", String, primary_key=True)
+    seq = Column("seq", String)
+    length = Column("length", Integer)
