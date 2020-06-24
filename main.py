@@ -1,11 +1,11 @@
-from database_models import Model_anno,  engine, base, chr_seq, Model_anno_seq
+from database_models import Model_anno,  engine, base, chr_seq, Model_anno_seq, Model_iprscan, Model_go_slim
 from sqlalchemy import and_
 from sqlalchemy.orm import sessionmaker
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import re
 from utility import fetch_models, fetch_putative_function, fetch_interpro, fetch_go_annotation, fetch_pfam,\
-    fetch_model_attrs, fetch_putataive_ssr, fetch_gene_model_sequences, Model_iprscan, Model_go_slim, clean_sequence
+    fetch_model_attrs, fetch_putataive_ssr, fetch_gene_model_sequences, clean_sequence
 def start_connection():
     Session = sessionmaker(engine)
     session = Session()
