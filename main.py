@@ -139,7 +139,7 @@ def get_interpro(keyword: str, type: str):
 
 
 
-@app.get("/go/{keyword}-{type}") # function to get go results, still needs work
+@app.get("/go/{keyword}-{type}")
 def get_go(keyword: str, type: str):
     try:
         session = start_connection()
