@@ -250,7 +250,7 @@ def get_seq_from_direction(bp: int, direction: str, id: str):
             data["head"] = ">" + chr + ":" + str(stop) + "," + str(stop+bp)
         else:
             big_seq = session_query.execute (
-                "select substr(chr_seq.seq, {},{}) from chr_seq where chr_seq.chr == 'all'".format ( str ( start - bp ) ,str ( start ) ) )
+                "select substr(chr_seq.seq, {},{}) from chr_seq where chr_seq.chr == 'all'".format ( str ( start - bp ) ,str ( bp ) ) )
             seq = str(big_seq.fetchone()[0])
             if query.origin == "-":
                 seq = seq[::-1]
