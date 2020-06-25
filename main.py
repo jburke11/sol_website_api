@@ -3,6 +3,7 @@ from sqlalchemy import and_
 from sqlalchemy.orm import sessionmaker
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+import sqlite3
 import re
 from utility import fetch_models, fetch_putative_function, fetch_interpro, fetch_go_annotation, fetch_pfam,\
     fetch_model_attrs, fetch_putataive_ssr, fetch_gene_model_sequences, clean_sequence
@@ -226,6 +227,7 @@ def get_seq_from_id(id: str, type: str):
 @app.get("/seq_dir/{bp}-{direction}-{id}")
 def get_seq_from_direction(bp: int, direction: str, id: str):
     session = start_connection()
+    session_query = sqlite3.connect("/Users/burkej24/Desktop/potato_website/DM_6.1.db")
     try:
         query = session.query(Model_anno).filter(Model_anno.transcript_id == id)
         query = query.one()
@@ -233,21 +235,34 @@ def get_seq_from_direction(bp: int, direction: str, id: str):
         stop = query.stop
         chr = query.scaffold
         data = {}
-        query = session.query(chr_seq).filter(chr_seq.chr == "all")
-        big_seq = query.one()
-        big_seq = big_seq.seq
+        big_seq =""
         if direction == "upstream":
-            data["seq"] = clean_sequence(big_seq[stop:(stop + bp)])
+            big_seq = session_query.execute (
+                "select substr(chr_seq.seq, {},{}) from chr_seq where chr_seq.chr == 'all'".format(str(stop), str(bp)))
+            seq = str(big_seq.fetchone()[0])
+            if query.origin == "-":
+                seq = seq[::-1]
+            else:
+                pass
+            data["seq"] = clean_sequence(seq)
             data["caption"] = id + " was found on " + chr + " from " + str(start) + " to " + str(stop) + "\n" + "Displaying " + str(bp) + " bp " + direction \
             + " of " + id + " from position " + str(stop) + " to " + str(stop + bp)
             data["head"] = ">" + chr + ":" + str(stop) + "," + str(stop+bp)
         else:
-            data ["seq"] = clean_sequence(big_seq [(start - bp):start])
+            big_seq = session_query.execute (
+                "select substr(chr_seq.seq, {},{}) from chr_seq where chr_seq.chr == 'all'".format ( str ( start - bp ) ,str ( start ) ) )
+            seq = str(big_seq.fetchone()[0])
+            if query.origin == "-":
+                seq = seq[::-1]
+            else:
+                pass
+            data ["seq"] = clean_sequence(seq)
             data["caption"] = id + " was found on " + chr + " from " + str(start) + " to " + str(stop) + "\n" + "Displaying " + str(bp) + " bp " + direction \
             + " of " + id + " from position " + str(start - bp) + " to " + str(start)
             data["head"] = ">" + chr + ":" + str(start - bp) + "," + str(start)
         return data
-    except :
+    except IndexError:
         raise HTTPException ( status_code=404 , detail="transcript id not found" )
     finally:
         stop_session ( session )
+        session_query.close()

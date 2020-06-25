@@ -2,7 +2,7 @@ from sqlalchemy import String, Integer, Column, create_engine, and_, ForeignKey,
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 base = declarative_base()
-engine = create_engine ( 'sqlite:////Users/burkej24/Desktop/potato_website/DM_6.1.db', echo=False)
+engine = create_engine ( 'sqlite:////Users/burkej24/Desktop/potato_website/DM_6.1.db', echo=True)
 class Model_anno(base):
     __tablename__ = 'model_anno'
 
