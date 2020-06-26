@@ -277,6 +277,19 @@ def get_seq_from_direction(bp: int, direction: str, id: str):
     finally:
         stop_session ( session )
         session_query.close()
-
 # given gene id provide transcript ids
-# reverse
+@app.get("/find_transcripts/{locus}")
+def gene_to_transcript(locus: str):
+    try:
+        session = start_connection()
+        query = session.query(Model_anno.transcript_id).filter(Model_anno.gene_id == locus)
+        data = {}
+        data["transcripts"] = []
+        for item in query:
+            print("here")
+            data["transcripts"].append(item[0])
+        return data
+    except:
+        raise HTTPException ( status_code=404 , detail="transcript id not found" )
+    finally:
+        stop_session(session)
