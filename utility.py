@@ -137,3 +137,13 @@ def clean_sequence(sequence):
         x += 60
         y += 60
     return result
+
+def reverse_complement(ch):
+    if ch == "A" :
+        return "T"
+    elif ch == "T" :
+        return "A"
+    elif ch == "G" :
+        return "C"
+    else:
+        return "G"

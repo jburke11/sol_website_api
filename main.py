@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import sqlite3
 import re
 from utility import fetch_models, fetch_putative_function, fetch_interpro, fetch_go_annotation, fetch_pfam,\
-    fetch_model_attrs, fetch_putataive_ssr, fetch_gene_model_sequences, clean_sequence
+    fetch_model_attrs, fetch_putataive_ssr, fetch_gene_model_sequences, clean_sequence, reverse_complement
 def start_connection():
     Session = sessionmaker(engine)
     session = Session()
@@ -184,7 +184,7 @@ def get_from_length(chr:str, start: int, stop: int):
   session = start_connection()
   query = session.query(chr_seq).filter(chr_seq.chr == chr)
   seq = query.one()
-  if seq.length < stop:
+  if seq.length < stop or start < 1:
       raise HTTPException( status_code=404 , detail="sequence not found")
   else:
       data = {}
@@ -234,14 +234,21 @@ def get_seq_from_direction(bp: int, direction: str, id: str):
         start = query.start
         stop = query.stop
         chr = query.scaffold
+        query1 = session.query(chr_seq.length).filter(chr_seq.chr == chr)
+        length = query1.one()[0]
+        if length < 1:
+            raise IndexError
         data = {}
-        big_seq =""
         if direction == "upstream":
+            if stop + bp > length:
+                raise IndexError
+            items = (str(stop), str(bp), str(chr))
             big_seq = session_query.execute (
-                "select substr(chr_seq.seq, {},{}) from chr_seq where chr_seq.chr == 'all'".format(str(stop), str(bp)))
+                "select substr(chr_seq.seq, ?,?) from chr_seq where chr_seq.chr == ?", items)
             seq = str(big_seq.fetchone()[0])
             if query.origin == "-":
                 seq = seq[::-1]
+                seq = ("").join([reverse_complement(ch) for ch in seq])
             else:
                 pass
             data["seq"] = clean_sequence(seq)
@@ -249,11 +256,15 @@ def get_seq_from_direction(bp: int, direction: str, id: str):
             + " of " + id + " from position " + str(stop) + " to " + str(stop + bp)
             data["head"] = ">" + chr + ":" + str(stop) + "," + str(stop+bp)
         else:
+            if start - bp < 1:
+                raise IndexError
+            items = (str ( start - bp ) ,str ( bp ), chr)
             big_seq = session_query.execute (
-                "select substr(chr_seq.seq, {},{}) from chr_seq where chr_seq.chr == 'all'".format ( str ( start - bp ) ,str ( bp ) ) )
+                "select substr(chr_seq.seq, ?,?) from chr_seq where chr_seq.chr == ?", items )
             seq = str(big_seq.fetchone()[0])
             if query.origin == "-":
                 seq = seq[::-1]
+                seq = ("").join([reverse_complement(ch) for ch in seq])
             else:
                 pass
             data ["seq"] = clean_sequence(seq)
@@ -266,3 +277,6 @@ def get_seq_from_direction(bp: int, direction: str, id: str):
     finally:
         stop_session ( session )
         session_query.close()
+
+# given gene id provide transcript ids
+# reverse
