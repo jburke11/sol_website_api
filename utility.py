@@ -128,6 +128,19 @@ def fetch_gene_model_sequences(rep_model, locus, session):
     #res_dict [ "locus_seq" ] = ">" + locus + "|genomic\n" + clean_sequence(query.locus)
     return res_dict
 
+def fetch_gene_model_sequences_api(rep_model, locus, session):
+    query = session.query(Model_anno_seq).filter(Model_anno_seq.transcript_id == rep_model)
+    res_dict = {}
+    query = query.first()
+    res_dict [ "cdna_seq" ] = ">" + rep_model + "|cDNA\n" + query.cdna
+    res_dict["cds_seq"] = ">" + rep_model + "|cDNA\n" + query.cds
+    res_dict["prot_seq"] = ">" + rep_model + "|cDNA\n" + query.protein
+    #query = session.query ( Locus_anno_seq ).filter ( Locus_anno_seq.locus_id == locus )
+    #query = query.first()
+    #res_dict [ "locus_seq" ] = ">" + locus + "|genomic\n" + clean_sequence(query.locus)
+    return res_dict
+
+
 def clean_sequence(sequence):
     result = ""
     x = 0
