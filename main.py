@@ -6,7 +6,8 @@ from fastapi.middleware.cors import CORSMiddleware
 import sqlite3
 import re
 from utility import fetch_models, fetch_putative_function, fetch_interpro, fetch_go_annotation, fetch_pfam,\
-    fetch_model_attrs, fetch_putataive_ssr, fetch_gene_model_sequences, clean_sequence, reverse_complement, fetch_gene_model_sequences_api
+    fetch_model_attrs, fetch_putataive_ssr, fetch_gene_model_sequences, clean_sequence, reverse_complement, \
+    fetch_gene_model_sequences_api
 def start_connection():
     Session = sessionmaker(engine)
     session = Session()
@@ -28,7 +29,7 @@ app.add_middleware(
 
 @app.get("/")
 def root():
-    return {"it" : "works"}
+    return {"Status" : "Operational"}
 
 
 @app.get("/id/{transcript_id}")
