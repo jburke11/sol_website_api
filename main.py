@@ -17,13 +17,13 @@ def stop_session(session):
     return 1
 
 base.metadata.create_all( engine )
-app = FastAPI(debug = True , title="Potato Genome API Documentation")
+app = FastAPI(debug = True , title="Potato Genome API Documentation") # debug will need to be changed to false
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins =  ['*'],
+    allow_origins =  ['*'], # this needs to be changed when moving to prod. it will need to be the ip address of the website
     allow_methods = ['*'],
-    allow_headers = ['*'],
+    allow_headers = ['*'], # probably needs to be changed also
     max_age = 1
 )
 
@@ -419,7 +419,7 @@ def get_seq_from_direction(bp: int, direction: str, id: str):
     finally:
         stop_session ( session )
         session_query.close()
-# given gene id provide transcript ids
+
 @app.get("/find_transcripts/{locus}")
 def gene_to_transcript(locus: str):
     try:
